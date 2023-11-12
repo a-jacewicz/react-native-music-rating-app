@@ -43,7 +43,10 @@ export default function Register({ navigation }) {
   const handleRegistration = async () => {
     try {
       const response = await fetch(
-        "http://172.21.250.15:8081/index.php/user/register",
+       // kelleighs IP
+       // "http://172.21.250.15:8081/index.php/user/register",
+       // aleks IP address 
+       'http://129.133.177.132/index.php/user/register', 
         {
           method: "POST",
           headers: {
