@@ -17,7 +17,13 @@ export default function Read() {
         color={"#FF1CC0"}
         //   onPress={handleCreate}
       ></Button>
+      <Text>{"\n"}</Text>
       {/* logout button */}
+      <Button
+        title="Logout"
+        color={"#6c80ff"}
+        //   onPress={handleLogout}
+      ></Button>
     </View>
   );
 }
