@@ -35,11 +35,11 @@ export default function Read() {
 
   //  go to individual song view
   const onPressSong = (item) => {
-    const data = {
-      item,
-    };
+    // const data = {
+    //   item,
+    // };
     // navigate("/viewSong", { data });
-    navigation.navigate("Individual");
+    navigation.navigate("Individual", { item });
   };
 
   //  navigate to create page
