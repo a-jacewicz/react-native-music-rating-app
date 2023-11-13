@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, Button } from "react-native";
 import { Rating } from "react-native-ratings";
-// import { Rate } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Individual() {
   return (
@@ -13,9 +14,18 @@ export default function Individual() {
       <Text style={styles.song}>SONG</Text>
       <Text style={styles.artist}>by Artist</Text>
       <Rating readonly={true} tintColor="#17222c" />
-      {/* <Rate /> */}
-      {/* edit button */}
-      {/* delete button */}
+      <Text>{"\n"}</Text>
+      <View style={styles.iconContainer}>
+        {/* edit button */}
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+          color={"#B131FA"}
+          size={30}
+          style={styles.icon}
+        />
+        {/* delete button */}
+        <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
+      </View>
     </View>
   );
 }
@@ -42,5 +52,13 @@ const styles = StyleSheet.create({
   username: {
     color: "#ccbed8",
     fontSize: 14,
+  },
+  iconContainer: {
+    flexDirection: "row",
+    // justifyContent: "space-between",
+    // width: "100%", // Adjust width based on your design
+  },
+  icon: {
+    marginRight: 64, // Adjust the margin as needed
   },
 });
