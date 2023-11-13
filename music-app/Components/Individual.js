@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Button } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Rating } from "react-native-ratings";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -7,10 +7,69 @@ import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 export default function Individual({ route }) {
   const { data } = route.params;
 
+  const [id, setID] = useState(data.id);
   const [username, setUsername] = useState(data.username);
   const [artist, setArtist] = useState(data.artist);
   const [song, setSong] = useState(data.song);
   const [rating, setRating] = useState(data.rating);
+
+  // edit entry
+  // navigate to update page with data
+  const handleEdit = (item) => {
+    const data = {
+      id: item.id,
+      username: item.username,
+      song: item.song,
+      artist: item.artist,
+      rating: item.rating,
+    };
+    navigate("/update", { data });
+  };
+
+  // delete entry
+  // pop up to confirm and navigate to read
+  const removeEntry = async (id) => {
+    try {
+      const response = await fetch("http://localhost/index.php/rating/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id, username }), // Make sure username is defined
+      });
+
+      const responseData = await response.json();
+
+      if (responseData.message) {
+        console.log(responseData.message);
+        setSongData((prevSongData) =>
+          prevSongData.filter((item) => item.id !== id)
+        );
+      } else {
+        console.error("Unexpected response format:", responseData);
+      }
+    } catch (error) {
+      console.error("Error deleting entry:", error.message);
+    }
+  };
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Confirm Deletion",
+      "Do you want to remove?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => removeEntry(item.id),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -26,14 +85,26 @@ export default function Individual({ route }) {
       {/* add condition to only show if username is same as user who is logged in */}
       <View style={styles.iconContainer}>
         {/* edit button */}
-        <FontAwesomeIcon
-          icon={faPenToSquare}
-          color={"#B131FA"}
-          size={30}
-          style={styles.icon}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            handleEdit(item);
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faPenToSquare}
+            color={"#B131FA"}
+            size={30}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
         {/* delete button */}
-        <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
+        <TouchableOpacity
+          onPress={() => {
+            handleDelete(item.id);
+          }}
+        >
+          <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
+        </TouchableOpacity>
       </View>
     </View>
   );
