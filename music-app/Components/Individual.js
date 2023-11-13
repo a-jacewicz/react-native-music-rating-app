@@ -4,14 +4,15 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export default function Individual({ route }) {
-  const { data } = route.params;
+export default function Individual() {
+  // { route }
+  // const { data } = route.params;
 
-  const [id, setID] = useState(data.id);
-  const [username, setUsername] = useState(data.username);
-  const [artist, setArtist] = useState(data.artist);
-  const [song, setSong] = useState(data.song);
-  const [rating, setRating] = useState(data.rating);
+  // const [id, setID] = useState(data.id);
+  // const [username, setUsername] = useState(data.username);
+  // const [artist, setArtist] = useState(data.artist);
+  // const [song, setSong] = useState(data.song);
+  // const [rating, setRating] = useState(data.rating);
 
   // edit entry
   // navigate to update page with data
@@ -77,10 +78,11 @@ export default function Individual({ route }) {
       <Image style={styles.logo} source={require("./logo.png")} />
       <Text>{"\n"}</Text>
       {/* song entry details */}
-      <Text style={styles.username}>{username}</Text>
-      <Text style={styles.song}>{song}</Text>
-      <Text style={styles.artist}>by {artist}</Text>
-      <Rating readonly={true} tintColor="#17222c" startingValue={rating} />
+      <Text style={styles.username}>username</Text>
+      <Text style={styles.song}>Song</Text>
+      <Text style={styles.artist}>by Artist</Text>
+      <Rating readonly={true} tintColor="#17222c" />
+      {/* startingValue={rating} */}
       <Text>{"\n"}</Text>
       {/* add condition to only show if username is same as user who is logged in */}
       <View style={styles.iconContainer}>
