@@ -70,7 +70,7 @@ export default function Create() {
           autoCompleteType="off"
           autoCapitalize="none"
           keyboardType="default"
-          value={username}
+          value={artist}
           onChangeText={(text) => setArtist(text)}
           required
         />
@@ -80,7 +80,7 @@ export default function Create() {
           placeholder="Title"
           secureTextEntry
           autoCompleteType="off"
-          value={password}
+          value={song}
           onChangeText={(text) => setSong(text)}
           required
         />
@@ -90,7 +90,7 @@ export default function Create() {
           placeholder="Rating"
           secureTextEntry
           autoCompleteType="off"
-          value={second}
+          value={rating}
           onChangeText={(text) => setRating(text)}
           required
         />
