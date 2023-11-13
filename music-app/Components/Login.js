@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -45,6 +46,7 @@ export default function Login() {
       }
 
       if (response.status === 200) {
+        await AsyncStorage.setItem('username', username);
         alert("Login successful!");
         // navigation.navigate("Login");
       } else {
