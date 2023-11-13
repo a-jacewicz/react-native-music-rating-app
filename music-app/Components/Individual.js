@@ -3,6 +3,7 @@ import { Rating } from "react-native-ratings";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useRoute } from "@react-navigation/native";
 
 export default function Individual() {
   const route = useRoute();
