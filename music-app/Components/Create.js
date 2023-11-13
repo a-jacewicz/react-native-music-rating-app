@@ -94,6 +94,7 @@ export default function Create() {
         fullStarColor={'gold'}
         emptyStarColor={'grey'}
         starSize={30}
+        
         />
         <Button title="Rate" onPress={handleCreate}></Button>
       </View>
