@@ -9,9 +9,6 @@ export default function Individual() {
   const route = useRoute();
   const { item } = route.params;
 
-  // { route }
-  // const { data } = route.params;
-
   const [id, setID] = useState(item.id);
   const [username, setUsername] = useState(item.username);
   const [artist, setArtist] = useState(item.artist);
@@ -20,16 +17,9 @@ export default function Individual() {
 
   // edit entry
   // navigate to update page with data
-  // const handleEdit = (item) => {
-  //   const data = {
-  //     id: item.id,
-  //     username: item.username,
-  //     song: item.song,
-  //     artist: item.artist,
-  //     rating: item.rating,
-  //   };
-  //   navigate("/update", { data });
-  // };
+  const handleEdit = (item) => {
+    navigation.navigate("Update", { item });
+  };
 
   // delete entry
   // pop up to confirm and navigate to read
@@ -92,9 +82,9 @@ export default function Individual() {
       <View style={styles.iconContainer}>
         {/* edit button */}
         <TouchableOpacity
-        // onPress={() => {
-        //   handleEdit(item);
-        // }}
+          onPress={() => {
+            handleEdit(item);
+          }}
         >
           <FontAwesomeIcon
             icon={faPenToSquare}
