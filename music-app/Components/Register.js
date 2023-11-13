@@ -7,15 +7,15 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-// import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-// import {
-//   faCheck,
-//   faTimes,
-//   faInfoCircle,
-// } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faCheck,
+  faTimes,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
-// const USER_REGEX = /^[a-zA-Z0-9-_]{4,23}$/;
-// const PWD_REGEX = /^[a-zA-Z0-9-_]{10,24}$/;
+const USER_REGEX = /^[a-zA-Z0-9-_]{4,23}$/;
+const PWD_REGEX = /^[a-zA-Z0-9-_]{10,24}$/;
 
 export default function Register({ navigation }) {
   const [username, setUsername] = useState("");
@@ -23,30 +23,30 @@ export default function Register({ navigation }) {
   const [second, setSecond] = useState("");
   const [message, setMessage] = useState("");
 
-  // const [validUser, setValidUser] = useState(false);
-  // const [validPwd, setValidPwd] = useState(false);
-  // const [validSecond, setValidSecond] = useState(false);
+  const [validUser, setValidUser] = useState(false);
+  const [validPwd, setValidPwd] = useState(false);
+  const [validSecond, setValidSecond] = useState(false);
 
-  // useEffect(() => {
-  //   const isValid = USER_REGEX.test(username);
-  //   setValidUser(isValid);
-  // }, [username]);
+  useEffect(() => {
+    const isValid = USER_REGEX.test(username);
+    setValidUser(isValid);
+  }, [username]);
 
-  // useEffect(() => {
-  //   const isValidPwd = PWD_REGEX.test(password);
-  //   setValidPwd(isValidPwd);
+  useEffect(() => {
+    const isValidPwd = PWD_REGEX.test(password);
+    setValidPwd(isValidPwd);
 
-  //   const match = password === second;
-  //   setValidSecond(match);
-  // }, [password, second]);
+    const match = password === second;
+    setValidSecond(match);
+  }, [password, second]);
 
   const handleRegistration = async () => {
     try {
       const response = await fetch(
-       // kelleighs IP
-       // "http://172.21.250.15:8081/index.php/user/register",
-       // aleks IP address 
-       'http://129.133.177.132/index.php/user/register', 
+        // kelleighs IP
+        // "http://172.21.250.15/index.php/user/register",
+        // aleks IP address
+        //  'http://129.133.177.132/index.php/user/register',
         {
           method: "POST",
           headers: {
@@ -86,10 +86,18 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <View>
-      <Text>Register</Text>
-      <View>
-        <Text>Username</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Register</Text>
+      <View style={styles.form}>
+        <Text style={styles.label}>
+          Username
+          {validUser && (
+            <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
+          )}
+          {!validUser && username && (
+            <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
+          )}
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -100,7 +108,26 @@ export default function Register({ navigation }) {
           onChangeText={(text) => setUsername(text)}
           required
         />
-        <Text>Password</Text>
+        <Text
+          style={
+            username && !validUser ? styles.instructions : styles.offscreen
+          }
+        >
+          <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
+          <Text style={styles.info}>
+            Username must be at least 4 characters long.
+          </Text>
+        </Text>
+
+        <Text style={styles.label}>
+          Password
+          {validPwd && (
+            <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
+          )}
+          {!validPwd && password && (
+            <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
+          )}
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -110,7 +137,32 @@ export default function Register({ navigation }) {
           onChangeText={(text) => setPassword(text)}
           required
         />
-        <Text>Confirm Password</Text>
+        <Text
+          style={password && !validPwd ? styles.instructions : styles.offscreen}
+        >
+          <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
+          <Text style={styles.info}>
+            Password must be at least 10 characters long.
+          </Text>
+          <Text style={styles.info}>
+            Allowed special characters:{" "}
+            <Text aria-label="exclamation mark">!</Text>
+            <Text aria-label="at symbol">@</Text>
+            <Text aria-label="hashtag">#</Text>
+            <Text aria-label="dollar sign">$</Text>
+            <Text aria-label="percent">%</Text>
+          </Text>
+        </Text>
+
+        <Text style={styles.label}>
+          Confirm Password
+          {validSecond && second && (
+            <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
+          )}
+          {!validSecond && second && (
+            <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
+          )}
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Confirm Password"
@@ -120,38 +172,56 @@ export default function Register({ navigation }) {
           onChangeText={(text) => setSecond(text)}
           required
         />
-        <Button title="Register" onPress={handleRegistration}></Button>
+        <Text
+          style={
+            second && !validSecond ? styles.instructions : styles.offscreen
+          }
+        >
+          <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
+          <Text style={styles.info}>Must match the first password.</Text>
+        </Text>
+
+        <Button
+          style={styles.button}
+          title="Register"
+          disabled={!validUser || !validPwd || !validSecond}
+          onPress={handleRegistration}
+        ></Button>
+      </View>
+      <View style={styles.login}>
+        <Text>Already registered?</Text>
+        <Text style={styles.link}>Login</Text>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  //   container: {
-  //     // flex: 1,
-  //     justifyContent: "center",
-  //     alignItems: "center",
-  //     backgroundColor: "#FF1CC0",
-  //     width: "80%",
-  //     maxWidth: 420,
-  //     minHeight: 400,
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     justifyContent: "flex-start",
-  //     padding: 16,
-  //   },
-  //   title: {
-  //     fontSize: 24,
-  //     fontWeight: "bold",
-  //     marginBottom: 20,
-  //   },
-  //   form: {
-  //     width: "80%",
-  //   },
-  //   label: {
-  //     fontSize: 16,
-  //     marginBottom: 8,
-  //   },
+  container: {
+    // flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FF1CC0",
+    width: "80%",
+    maxWidth: 420,
+    minHeight: 400,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  form: {
+    width: "80%",
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
   input: {
     height: 40,
     borderColor: "grey",
@@ -160,59 +230,59 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 10,
   },
-  //   validIcon: {
-  //     color: "limegreen",
-  //     marginLeft: 4,
-  //   },
-  //   invalidIcon: {
-  //     color: "red",
-  //     marginLeft: 4,
-  //   },
-  //   infoIcon: {
-  //     color: "white",
-  //   },
-  //   hide: {
-  //     display: "none",
-  //   },
-  //   instructions: {
-  //     flexDirection: "row",
-  //     alignItems: "center",
-  //     marginTop: 8,
-  //     backgroundColor: "#000",
-  //     borderRadius: 8,
-  //     padding: 4,
-  //     position: "relative",
-  //     bottom: -10,
-  //     // fontSize: 14,
-  //     // marginTop: 8,
-  //     // color: "red", // Change color as needed
-  //   },
-  //   offscreen: {
-  //     position: "absolute",
-  //     left: -9999,
-  //     height: 1,
-  //     width: 1,
-  //     overflow: "hidden",
-  //   },
-  //   info: {
-  //     color: "white",
-  //   },
-  //   button: {
-  //     backgroundColor: "#007BFF",
-  //     paddingVertical: 10,
-  //     borderRadius: 5,
-  //     marginTop: 20,
-  //     alignItems: "center",
-  //   },
-  //   buttonText: {
-  //     color: "#fff",
-  //     fontSize: 18,
-  //   },
-  //   link: {
-  //     color: "blue", // Adjust the color as needed
-  //     textDecorationLine: "underline",
-  //   },
-  //   login: {
-  //     alignItems: "center",
-  //   },
+  validIcon: {
+    color: "limegreen",
+    marginLeft: 4,
+  },
+  invalidIcon: {
+    color: "red",
+    marginLeft: 4,
+  },
+  infoIcon: {
+    color: "white",
+  },
+  hide: {
+    display: "none",
+  },
+  instructions: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+    backgroundColor: "#000",
+    borderRadius: 8,
+    padding: 4,
+    position: "relative",
+    bottom: -10,
+    // fontSize: 14,
+    // marginTop: 8,
+    // color: "red", // Change color as needed
+  },
+  offscreen: {
+    position: "absolute",
+    left: -9999,
+    height: 1,
+    width: 1,
+    overflow: "hidden",
+  },
+  info: {
+    color: "white",
+  },
+  button: {
+    backgroundColor: "#007BFF",
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+  },
+  link: {
+    color: "blue", // Adjust the color as needed
+    textDecorationLine: "underline",
+  },
+  login: {
+    alignItems: "center",
+  },
 });
