@@ -19,7 +19,11 @@ export default function Read() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://172.21.250.15/index.php/rating/view"
+          // kelleigh IP address
+        //  "http://172.21.250.15/index.php/rating/view"
+        // aleks IP address
+          'http://172.21.98.195/index.php/rating/view' 
+
         );
         const data = await response.json();
         setSongData(data);
@@ -103,6 +107,8 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     padding: 16,
+    backgroundColor: "#17222c",
+    flex: 1,
   },
   logo: {
     width: 160,
