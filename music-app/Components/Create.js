@@ -35,3 +35,26 @@ export default function Create() {
               }),
             }
           );
+
+      // Check if the response is not in JSON format
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.message) {
+        setMessage(data.message);
+      }
+
+      if (response.status === 200) {
+        alert("Rating successfully!");
+      } else {
+        setMessage("Rating failed.");
+        throw new Error("Rating failed.");
+      }
+    } catch (error) {
+      setMessage("Issue!");
+      console.error(error);
+    }
+  };
