@@ -47,6 +47,11 @@ export default function Read() {
     navigate("/create");
   };
 
+  // log user out and navigate to login page
+  const handleLogout = () => {
+    navigate("/login");
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -90,7 +95,7 @@ export default function Read() {
         <Button
           title="Logout"
           color={"#6c80ff"}
-          //   onPress={handleLogout}
+          onPress={handleLogout}
         ></Button>
       </View>
     </ScrollView>
