@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Logout from "./Components/LogOut";
 import Create from "./Components/Create";
 import Login from "./Components/Login";
 
 export default function App() {
   return (
     <View style={styles.container}>
+      <Logout />
     <Create />
       <Login />
     </View>
