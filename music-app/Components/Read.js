@@ -7,14 +7,14 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
 
 export default function Read() {
   const [songData, setSongData] = useState([]);
 
-  const navigate = useNavigation();
+  // const navigation = useNavigation();
 
-  //   gets list of song entries
+  // gets list of song entries
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,30 +27,27 @@ export default function Read() {
         console.error(error.message);
       }
     };
-
     fetchData();
   }, []);
 
   //  go to individual song view
-  const onPressSong = (item) => {
-    const data = {
-      username: item.username,
-      song: item.song,
-      artist: item.artist,
-      rating: item.rating,
-    };
-    navigate("/viewSong", { data });
-  };
+  // const onPressSong = (item) => {
+  //   const data = {
+  //     item,
+  //   };
+  //   // navigate("/viewSong", { data });
+  //   navigation.navigate("YourScreenName");
+  // };
 
   //  navigate to create page
-  const handleCreate = () => {
-    navigate("/create");
-  };
+  // const handleCreate = () => {
+  //   navigate("/create");
+  // };
 
-  // log user out and navigate to login page
-  const handleLogout = () => {
-    navigate("/login");
-  };
+  // // log user out and navigate to login page
+  // const handleLogout = () => {
+  //   navigate("/login");
+  // };
 
   return (
     <ScrollView>
@@ -72,9 +69,9 @@ export default function Read() {
               <View key={item.id}>
                 <Text
                   style={styles.entry}
-                  onPress={() => {
-                    onPressSong(item);
-                  }}
+                  // onPress={() => {
+                  //   onPressSong(item);
+                  // }}
                 >
                   <Text style={styles.song}>{item.song} </Text>
                   <Text style={styles.artist}> {item.artist}</Text>
@@ -88,14 +85,14 @@ export default function Read() {
         <Button
           title="Create"
           color={"#FF1CC0"}
-          onPress={handleCreate}
+          // onPress={handleCreate}
         ></Button>
         <Text>{"\n"}</Text>
         {/* logout button */}
         <Button
           title="Logout"
           color={"#6c80ff"}
-          onPress={handleLogout}
+          // onPress={handleLogout}
         ></Button>
       </View>
     </ScrollView>
@@ -104,10 +101,7 @@ export default function Read() {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: "#fff",
     alignItems: "center",
-    // justifyContent: "center",
     padding: 16,
   },
   logo: {
@@ -123,7 +117,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   song: {
-    // alignItems: "center",
     fontWeight: "bold",
     color: "#e1d4f3",
   },
