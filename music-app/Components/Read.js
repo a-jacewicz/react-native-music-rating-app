@@ -31,7 +31,7 @@ export default function Read() {
     fetchData();
   }, []);
 
-  //   go to individual song view
+  //  go to individual song view
   const onPressSong = (item) => {
     const data = {
       username: item.username,
@@ -40,6 +40,11 @@ export default function Read() {
       rating: item.rating,
     };
     navigate("/viewSong", { data });
+  };
+
+  //  navigate to create page
+  const handleCreate = () => {
+    navigate("/create");
   };
 
   return (
@@ -78,7 +83,7 @@ export default function Read() {
         <Button
           title="Create"
           color={"#FF1CC0"}
-          //   onPress={handleCreate}
+          onPress={handleCreate}
         ></Button>
         <Text>{"\n"}</Text>
         {/* logout button */}
