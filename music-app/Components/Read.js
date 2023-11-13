@@ -7,12 +7,12 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-// import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Read() {
   const [songData, setSongData] = useState([]);
 
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   // gets list of song entries
   useEffect(() => {
@@ -20,10 +20,9 @@ export default function Read() {
       try {
         const response = await fetch(
           // kelleigh IP address
-        //  "http://172.21.250.15/index.php/rating/view"
-        // aleks IP address
-          'http://172.21.98.195/index.php/rating/view' 
-
+          //  "http://172.21.250.15/index.php/rating/view"
+          // aleks IP address
+          "http://172.21.98.195/index.php/rating/view"
         );
         const data = await response.json();
         setSongData(data);
@@ -35,13 +34,13 @@ export default function Read() {
   }, []);
 
   //  go to individual song view
-  // const onPressSong = (item) => {
-  //   const data = {
-  //     item,
-  //   };
-  //   // navigate("/viewSong", { data });
-  //   navigation.navigate("YourScreenName");
-  // };
+  const onPressSong = (item) => {
+    const data = {
+      item,
+    };
+    // navigate("/viewSong", { data });
+    navigation.navigate("Individual");
+  };
 
   //  navigate to create page
   // const handleCreate = () => {
@@ -73,9 +72,9 @@ export default function Read() {
               <View key={item.id}>
                 <Text
                   style={styles.entry}
-                  // onPress={() => {
-                  //   onPressSong(item);
-                  // }}
+                  onPress={() => {
+                    onPressSong(item);
+                  }}
                 >
                   <Text style={styles.song}>{item.song} </Text>
                   <Text style={styles.artist}> {item.artist}</Text>
