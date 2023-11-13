@@ -8,12 +8,13 @@ import {
   StyleSheet,
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import StarRating from 'react-native-star-rating';
 
 
 export default function Create() {
     const [song, setSong] = useState("");
     const [artist, setArtist] = useState("");
-    const [rating, setRating] = useState("");
+    const [rating, setRating] = useState(0);
     const [message, setMessage] = useState("");
 
     const handleCreate = async () => {
@@ -49,7 +50,7 @@ export default function Create() {
       }
 
       if (response.status === 200) {
-        alert("Rating successfully!");
+        alert("Rated successfully!");
       } else {
         setMessage("Rating failed.");
         throw new Error("Rating failed.");
@@ -79,21 +80,20 @@ export default function Create() {
         <TextInput
           style={styles.input}
           placeholder="Title"
-          secureTextEntry
           autoCompleteType="off"
           value={song}
           onChangeText={(text) => setSong(text)}
           required
         />
         <Text>Rating</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Rating"
-          secureTextEntry
-          autoCompleteType="off"
-          value={rating}
-          onChangeText={(text) => setRating(text)}
-          required
+        <StarRating
+        disabled={false}
+        maxStars={5}
+        rating={rating}
+        selectedStar={(rating) => setRating(rating)}
+        fullStarColor={'gold'}
+        emptyStarColor={'grey'}
+        starSize={30}
         />
         <Button title="Rate" onPress={handleCreate}></Button>
       </View>
