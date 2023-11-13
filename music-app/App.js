@@ -1,11 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
 import Read from "./Components/Read";
-// import Individual from "./Components/Individual";
+import Register from "./Components/Register";
+import Logout from "./Components/LogOut";
+import Create from "./Components/Create";
+import Login from "./Components/Login";
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Read />
+      <Register />
+      <Logout />
+    <Create />
+      <Login />
     </View>
   );
 }
@@ -15,6 +22,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#17222c",
     alignItems: "center",
-    // justifyContent: "center",
   },
 });
