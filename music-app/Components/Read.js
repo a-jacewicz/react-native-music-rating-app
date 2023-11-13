@@ -43,14 +43,14 @@ export default function Read() {
   };
 
   //  navigate to create page
-  // const handleCreate = () => {
-  //   navigate("/create");
-  // };
+  const handleCreate = () => {
+    navigation.navigate("Create");
+  };
 
-  // // log user out and navigate to login page
-  // const handleLogout = () => {
-  //   navigate("/login");
-  // };
+  // log user out and navigate to login page
+  const handleLogout = () => {
+    navigation.navigate("Login");
+  };
 
   return (
     <ScrollView>
@@ -88,14 +88,14 @@ export default function Read() {
         <Button
           title="Create"
           color={"#FF1CC0"}
-          // onPress={handleCreate}
+          onPress={handleCreate}
         ></Button>
         <Text>{"\n"}</Text>
         {/* logout button */}
         <Button
           title="Logout"
           color={"#6c80ff"}
-          // onPress={handleLogout}
+          onPress={handleLogout}
         ></Button>
       </View>
     </ScrollView>
