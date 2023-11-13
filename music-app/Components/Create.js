@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Create() {
-    const [title, setTitle] = useState("");
+    const [song, setSong] = useState("");
     const [artist, setArtist] = useState("");
     const [rating, setRating] = useState("");
 
@@ -58,3 +58,56 @@ export default function Create() {
       console.error(error);
     }
   };
+
+  return (
+    <View>
+      <Text>Create Rating</Text>
+      <View>
+        <Text>Artist</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Artist"
+          autoCompleteType="off"
+          autoCapitalize="none"
+          keyboardType="default"
+          value={username}
+          onChangeText={(text) => setArtist(text)}
+          required
+        />
+        <Text>Song</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Title"
+          secureTextEntry
+          autoCompleteType="off"
+          value={password}
+          onChangeText={(text) => setSong(text)}
+          required
+        />
+        <Text>Rating</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Rating"
+          secureTextEntry
+          autoCompleteType="off"
+          value={second}
+          onChangeText={(text) => setRating(text)}
+          required
+        />
+        <Button title="Rate" onPress={handleCreate}></Button>
+      </View>
+    </View>
+  );
+}
+
+
+const styles = StyleSheet.create({
+    input: {
+        height: 40,
+        borderColor: "grey",
+        backgroundColor: "white",
+        borderWidth: 1,
+        marginBottom: 16,
+        paddingHorizontal: 10,
+      },
+    });
