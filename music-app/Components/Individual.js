@@ -15,61 +15,61 @@ export default function Individual({ route }) {
 
   // edit entry
   // navigate to update page with data
-  const handleEdit = (item) => {
-    const data = {
-      id: item.id,
-      username: item.username,
-      song: item.song,
-      artist: item.artist,
-      rating: item.rating,
-    };
-    navigate("/update", { data });
-  };
+  // const handleEdit = (item) => {
+  //   const data = {
+  //     id: item.id,
+  //     username: item.username,
+  //     song: item.song,
+  //     artist: item.artist,
+  //     rating: item.rating,
+  //   };
+  //   navigate("/update", { data });
+  // };
 
   // delete entry
   // pop up to confirm and navigate to read
-  const removeEntry = async (id) => {
-    try {
-      const response = await fetch("http://localhost/index.php/rating/delete", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id, username }), // Make sure username is defined
-      });
+  // const removeEntry = async (id) => {
+  //   try {
+  //     const response = await fetch("http://localhost/index.php/rating/delete", {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ id, username }), // Make sure username is defined
+  //     });
 
-      const responseData = await response.json();
+  //     const responseData = await response.json();
 
-      if (responseData.message) {
-        console.log(responseData.message);
-        setSongData((prevSongData) =>
-          prevSongData.filter((item) => item.id !== id)
-        );
-      } else {
-        console.error("Unexpected response format:", responseData);
-      }
-    } catch (error) {
-      console.error("Error deleting entry:", error.message);
-    }
-  };
+  //     if (responseData.message) {
+  //       console.log(responseData.message);
+  //       setSongData((prevSongData) =>
+  //         prevSongData.filter((item) => item.id !== id)
+  //       );
+  //     } else {
+  //       console.error("Unexpected response format:", responseData);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting entry:", error.message);
+  //   }
+  // };
 
-  const handleDelete = () => {
-    Alert.alert(
-      "Confirm Deletion",
-      "Do you want to remove?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => removeEntry(item.id),
-        },
-      ],
-      { cancelable: false }
-    );
-  };
+  // const handleDelete = () => {
+  //   Alert.alert(
+  //     "Confirm Deletion",
+  //     "Do you want to remove?",
+  //     [
+  //       {
+  //         text: "Cancel",
+  //         style: "cancel",
+  //       },
+  //       {
+  //         text: "OK",
+  //         onPress: () => removeEntry(item.id),
+  //       },
+  //     ],
+  //     { cancelable: false }
+  //   );
+  // };
 
   return (
     <View style={styles.container}>
@@ -86,9 +86,9 @@ export default function Individual({ route }) {
       <View style={styles.iconContainer}>
         {/* edit button */}
         <TouchableOpacity
-          onPress={() => {
-            handleEdit(item);
-          }}
+        // onPress={() => {
+        //   handleEdit(item);
+        // }}
         >
           <FontAwesomeIcon
             icon={faPenToSquare}
@@ -99,9 +99,9 @@ export default function Individual({ route }) {
         </TouchableOpacity>
         {/* delete button */}
         <TouchableOpacity
-          onPress={() => {
-            handleDelete(item.id);
-          }}
+        // onPress={() => {
+        //   handleDelete(item.id);
+        // }}
         >
           <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
         </TouchableOpacity>
@@ -135,10 +135,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: "row",
-    // justifyContent: "space-between",
-    // width: "100%", // Adjust width based on your design
   },
   icon: {
-    marginRight: 64, // Adjust the margin as needed
+    marginRight: 64,
   },
 });
