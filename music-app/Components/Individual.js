@@ -1,4 +1,6 @@
 import { StyleSheet, Text, View, Image, Button } from "react-native";
+import { Rating } from "react-native-ratings";
+// import { Rate } from "antd";
 
 export default function Individual() {
   return (
@@ -10,7 +12,8 @@ export default function Individual() {
       <Text style={styles.username}>username</Text>
       <Text style={styles.song}>SONG</Text>
       <Text style={styles.artist}>by Artist</Text>
-      <Text>Rating -- in stars</Text>
+      <Rating readonly={true} tintColor="#17222c" />
+      {/* <Rate /> */}
       {/* edit button */}
       {/* delete button */}
     </View>
@@ -34,6 +37,7 @@ const styles = StyleSheet.create({
   artist: {
     color: "#B131FA",
     fontSize: 22,
+    paddingBottom: 10,
   },
   username: {
     color: "#ccbed8",
