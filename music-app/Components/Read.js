@@ -7,9 +7,12 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Read() {
   const [songData, setSongData] = useState([]);
+
+  const navigate = useNavigation();
 
   //   gets list of song entries
   useEffect(() => {
@@ -27,6 +30,17 @@ export default function Read() {
 
     fetchData();
   }, []);
+
+  //   go to individual song view
+  const onPressSong = (item) => {
+    const data = {
+      username: item.username,
+      song: item.song,
+      artist: item.artist,
+      rating: item.rating,
+    };
+    navigate("/viewSong", { data });
+  };
 
   return (
     <ScrollView>
@@ -46,7 +60,12 @@ export default function Read() {
           {songData &&
             songData.map((item) => (
               <View key={item.id}>
-                <Text style={styles.entry}>
+                <Text
+                  style={styles.entry}
+                  onPress={() => {
+                    onPressSong(item);
+                  }}
+                >
                   <Text style={styles.song}>{item.song} </Text>
                   <Text style={styles.artist}> {item.artist}</Text>
                   <Text style={styles.username}> | {item.username}</Text>
