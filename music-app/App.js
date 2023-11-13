@@ -1,5 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import Register from "./Components/Register";
 import Logout from "./Components/LogOut";
 import Create from "./Components/Create";
 import Login from "./Components/Login";
@@ -7,6 +8,7 @@ import Login from "./Components/Login";
 export default function App() {
   return (
     <View style={styles.container}>
+      <Register />
       <Logout />
     <Create />
       <Login />
@@ -22,4 +24,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
