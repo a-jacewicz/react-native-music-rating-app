@@ -14,6 +14,7 @@ export default function Create() {
     const [song, setSong] = useState("");
     const [artist, setArtist] = useState("");
     const [rating, setRating] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleCreate = async () => {
         try {
