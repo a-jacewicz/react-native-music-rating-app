@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Button } from "react-native";
 import React from "react";
 import logo from "./logo.png";
 
@@ -10,7 +10,13 @@ export default function Read() {
       <Text>{"\n"}</Text>
       <Text>HEYYYY!</Text>
       {/* list -- scrolling feature */}
+      <Text>{"\n"}</Text>
       {/* create button */}
+      <Button
+        title="Create"
+        color={"#FF1CC0"}
+        //   onPress={handleCreate}
+      ></Button>
       {/* logout button */}
     </View>
   );
