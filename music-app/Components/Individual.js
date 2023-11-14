@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { Rating } from "react-native-ratings";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+import StarRating from "react-native-star-rating";
 
 export default function Individual() {
   const route = useRoute();
@@ -79,8 +79,14 @@ export default function Individual() {
         <Text style={styles.username}>{username}</Text>
         <Text style={styles.song}>{song}</Text>
         <Text style={styles.artist}>by {artist}</Text>
-        <Rating readonly={true} tintColor="#17222c" startingValue={rating} />
-        {/* startingValue={rating} */}
+        <StarRating
+          disabled={true}
+          maxStars={5}
+          rating={rating}
+          fullStarColor={"#FF1CC0"}
+          emptyStarColor={"#fcd7f2"}
+          starSize={36}
+        />
         <Text>{"\n"}</Text>
         {/* add condition to only show if username is same as user who is logged in */}
         <View style={styles.iconContainer}>
