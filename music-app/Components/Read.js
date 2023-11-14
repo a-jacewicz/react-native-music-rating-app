@@ -5,15 +5,25 @@ import {
   Image,
   Button,
   ScrollView,
+  RefreshControl,
+  SafeAreaView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Read() {
   const [songData, setSongData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const navigation = useNavigation();
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   // gets list of song entries
   useEffect(() => {
@@ -63,54 +73,60 @@ export default function Read() {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.app}>
-        <View style={styles.container}>
-          {/* logo */}
-          <Image style={styles.logo} source={require("./logo.png")} />
-          <Text>{"\n"}</Text>
-          {/* list -- scrolling feature */}
-          {/* visual test -- to be deleted */}
-          {/* <Text style={styles.entry}>
+    <SafeAreaView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <View style={styles.app}>
+          <View style={styles.container}>
+            {/* logo */}
+            <Image style={styles.logo} source={require("./logo.png")} />
+            <Text>{"\n"}</Text>
+            {/* list -- scrolling feature */}
+            {/* visual test -- to be deleted */}
+            {/* <Text style={styles.entry}>
             <Text style={styles.song}>SONG </Text>
             <Text style={styles.artist}> by Artist</Text>
             <Text style={styles.username}> | username</Text>
           </Text> */}
-          {/* ... */}
-          <View>
-            {songData &&
-              songData.map((item) => (
-                <View key={item.id}>
-                  <Text
-                    style={styles.entry}
-                    onPress={() => {
-                      onPressSong(item);
-                    }}
-                  >
-                    <Text style={styles.song}>{item.song} </Text>
-                    <Text style={styles.artist}> {item.artist}</Text>
-                    <Text style={styles.username}> | {item.username}</Text>
-                  </Text>
-                </View>
-              ))}
+            {/* ... */}
+            <View>
+              {songData &&
+                songData.map((item) => (
+                  <View key={item.id}>
+                    <Text
+                      style={styles.entry}
+                      onPress={() => {
+                        onPressSong(item);
+                      }}
+                    >
+                      <Text style={styles.song}>{item.song} </Text>
+                      <Text style={styles.artist}> {item.artist}</Text>
+                      <Text style={styles.username}> | {item.username}</Text>
+                    </Text>
+                  </View>
+                ))}
+            </View>
+            <Text>{"\n"}</Text>
+            {/* create button */}
+            <Button
+              title="Create"
+              color={"#FF1CC0"}
+              onPress={handleCreate}
+            ></Button>
+            <Text>{"\n"}</Text>
+            {/* logout button */}
+            <Button
+              title="Logout"
+              color={"#6c80ff"}
+              onPress={handleLogout}
+            ></Button>
           </View>
-          <Text>{"\n"}</Text>
-          {/* create button */}
-          <Button
-            title="Create"
-            color={"#FF1CC0"}
-            onPress={handleCreate}
-          ></Button>
-          <Text>{"\n"}</Text>
-          {/* logout button */}
-          <Button
-            title="Logout"
-            color={"#6c80ff"}
-            onPress={handleLogout}
-          ></Button>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
