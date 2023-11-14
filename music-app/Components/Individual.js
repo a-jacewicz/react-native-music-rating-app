@@ -54,7 +54,8 @@ export default function Individual() {
         // update songData list and return it to Read
 
         // Navigate back to the Read screen
-        navigation.navigate("Read");
+        // navigation.navigate("Read");
+        navigation.goBack();
       } else {
         console.error("Unexpected response format:", responseData);
       }
