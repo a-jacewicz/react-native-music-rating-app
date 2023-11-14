@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -17,10 +17,10 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const response = await fetch(
-       // kelleighs IP
-       // "http://172.21.250.15:8081/index.php/user/register",
-       // aleks IP address 
-       'http://172.21.98.195/index.php/user/login', 
+        // kelleighs IP
+        "http://172.21.250.15:8080/index.php/user/login",
+        // aleks IP address
+        //  'http://172.21.98.195/index.php/user/login',
         {
           method: "POST",
           headers: {
@@ -46,7 +46,7 @@ export default function Login() {
       }
 
       if (response.status === 200) {
-        await AsyncStorage.setItem('username', username);
+        await AsyncStorage.setItem("username", username);
         alert("Login successful!");
         // navigation.navigate("Login");
       } else {

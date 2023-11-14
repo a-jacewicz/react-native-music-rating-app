@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Individual() {
   const route = useRoute();
@@ -14,6 +15,8 @@ export default function Individual() {
   const [artist, setArtist] = useState(item.artist);
   const [song, setSong] = useState(item.song);
   const [rating, setRating] = useState(item.rating);
+
+  const navigation = useNavigation();
 
   // edit entry
   // navigate to update page with data
@@ -67,46 +70,53 @@ export default function Individual() {
   // };
 
   return (
-    <View style={styles.container}>
-      {/* logo */}
-      <Image style={styles.logo} source={require("./logo.png")} />
-      <Text>{"\n"}</Text>
-      {/* song entry details */}
-      <Text style={styles.username}>{username}</Text>
-      <Text style={styles.song}>{song}</Text>
-      <Text style={styles.artist}>by {artist}</Text>
-      <Rating readonly={true} tintColor="#17222c" startingValue={rating} />
-      {/* startingValue={rating} */}
-      <Text>{"\n"}</Text>
-      {/* add condition to only show if username is same as user who is logged in */}
-      <View style={styles.iconContainer}>
-        {/* edit button */}
-        <TouchableOpacity
-          onPress={() => {
-            handleEdit(item);
-          }}
-        >
-          <FontAwesomeIcon
-            icon={faPenToSquare}
-            color={"#B131FA"}
-            size={30}
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-        {/* delete button */}
-        <TouchableOpacity
-        // onPress={() => {
-        //   handleDelete(item.id);
-        // }}
-        >
-          <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
-        </TouchableOpacity>
+    <View style={styles.app}>
+      <View style={styles.container}>
+        {/* logo */}
+        <Image style={styles.logo} source={require("./logo.png")} />
+        <Text>{"\n"}</Text>
+        {/* song entry details */}
+        <Text style={styles.username}>{username}</Text>
+        <Text style={styles.song}>{song}</Text>
+        <Text style={styles.artist}>by {artist}</Text>
+        <Rating readonly={true} tintColor="#17222c" startingValue={rating} />
+        {/* startingValue={rating} */}
+        <Text>{"\n"}</Text>
+        {/* add condition to only show if username is same as user who is logged in */}
+        <View style={styles.iconContainer}>
+          {/* edit button */}
+          <TouchableOpacity
+            onPress={() => {
+              handleEdit(item);
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+              color={"#B131FA"}
+              size={30}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+          {/* delete button */}
+          <TouchableOpacity
+          // onPress={() => {
+          //   handleDelete(item.id);
+          // }}
+          >
+            <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  app: {
+    flex: 1,
+    backgroundColor: "#17222c",
+    alignItems: "center",
+  },
   container: {
     alignItems: "center",
     padding: 16,

@@ -20,9 +20,9 @@ export default function Read() {
       try {
         const response = await fetch(
           // kelleigh IP address
-          //  "http://172.21.250.15/index.php/rating/view"
+          "http://172.21.250.15:8080/index.php/rating/view"
           // aleks IP address
-          "http://172.21.98.195/index.php/rating/view"
+          // "http://172.21.98.195/index.php/rating/view"
         );
         const data = await response.json();
         setSongData(data);
@@ -54,55 +54,62 @@ export default function Read() {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        {/* logo */}
-        <Image style={styles.logo} source={require("./logo.png")} />
-        <Text>{"\n"}</Text>
-        {/* list -- scrolling feature */}
-        {/* visual test -- to be deleted */}
-        <Text style={styles.entry}>
-          <Text style={styles.song}>SONG </Text>
-          <Text style={styles.artist}> by Artist</Text>
-          <Text style={styles.username}> | username</Text>
-        </Text>
-        {/* ... */}
-        <View>
-          {songData &&
-            songData.map((item) => (
-              <View key={item.id}>
-                <Text
-                  style={styles.entry}
-                  onPress={() => {
-                    onPressSong(item);
-                  }}
-                >
-                  <Text style={styles.song}>{item.song} </Text>
-                  <Text style={styles.artist}> {item.artist}</Text>
-                  <Text style={styles.username}> | {item.username}</Text>
-                </Text>
-              </View>
-            ))}
+      <View style={styles.app}>
+        <View style={styles.container}>
+          {/* logo */}
+          <Image style={styles.logo} source={require("./logo.png")} />
+          <Text>{"\n"}</Text>
+          {/* list -- scrolling feature */}
+          {/* visual test -- to be deleted */}
+          <Text style={styles.entry}>
+            <Text style={styles.song}>SONG </Text>
+            <Text style={styles.artist}> by Artist</Text>
+            <Text style={styles.username}> | username</Text>
+          </Text>
+          {/* ... */}
+          <View>
+            {songData &&
+              songData.map((item) => (
+                <View key={item.id}>
+                  <Text
+                    style={styles.entry}
+                    onPress={() => {
+                      onPressSong(item);
+                    }}
+                  >
+                    <Text style={styles.song}>{item.song} </Text>
+                    <Text style={styles.artist}> {item.artist}</Text>
+                    <Text style={styles.username}> | {item.username}</Text>
+                  </Text>
+                </View>
+              ))}
+          </View>
+          <Text>{"\n"}</Text>
+          {/* create button */}
+          <Button
+            title="Create"
+            color={"#FF1CC0"}
+            onPress={handleCreate}
+          ></Button>
+          <Text>{"\n"}</Text>
+          {/* logout button */}
+          <Button
+            title="Logout"
+            color={"#6c80ff"}
+            onPress={handleLogout}
+          ></Button>
         </View>
-        <Text>{"\n"}</Text>
-        {/* create button */}
-        <Button
-          title="Create"
-          color={"#FF1CC0"}
-          onPress={handleCreate}
-        ></Button>
-        <Text>{"\n"}</Text>
-        {/* logout button */}
-        <Button
-          title="Logout"
-          color={"#6c80ff"}
-          onPress={handleLogout}
-        ></Button>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  app: {
+    flex: 1,
+    backgroundColor: "#17222c",
+    alignItems: "center",
+  },
   container: {
     alignItems: "center",
     padding: 16,

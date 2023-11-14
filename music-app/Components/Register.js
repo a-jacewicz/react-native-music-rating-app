@@ -13,11 +13,12 @@ import {
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const USER_REGEX = /^[a-zA-Z0-9-_]{4,23}$/;
 const PWD_REGEX = /^[a-zA-Z0-9-_]{10,24}$/;
 
-export default function Register({ navigation }) {
+export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [second, setSecond] = useState("");
@@ -26,6 +27,8 @@ export default function Register({ navigation }) {
   const [validUser, setValidUser] = useState(false);
   const [validPwd, setValidPwd] = useState(false);
   const [validSecond, setValidSecond] = useState(false);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const isValid = USER_REGEX.test(username);
@@ -40,13 +43,18 @@ export default function Register({ navigation }) {
     setValidSecond(match);
   }, [password, second]);
 
+  //  navigate to login page
+  const loginLink = () => {
+    navigation.navigate("Login");
+  };
+
   const handleRegistration = async () => {
     try {
       const response = await fetch(
         // kelleighs IP
-        // "http://172.21.250.15:8081/index.php/user/register",
+        "http://172.21.250.15:8080/index.php/user/register",
         // aleks IP address
-        "http://172.21.98.195/index.php/user/register",
+        // "http://172.21.98.195/index.php/user/register",
         {
           method: "POST",
           headers: {
@@ -75,6 +83,7 @@ export default function Register({ navigation }) {
       if (response.status === 200) {
         alert("Registered successfully!");
         // navigation.navigate("Login");
+        navigation.navigate("Login");
       } else {
         setMessage("Registration failed.");
         throw new Error("Registration failed.");
@@ -86,117 +95,129 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Register</Text>
-      <View style={styles.form}>
-        <Text style={styles.label}>
-          Username
-          {validUser && (
-            <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
-          )}
-          {!validUser && username && (
-            <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
-          )}
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          autoCompleteType="off"
-          autoCapitalize="none"
-          keyboardType="default"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
-          required
-        />
-        <Text
-          style={
-            username && !validUser ? styles.instructions : styles.offscreen
-          }
-        >
-          <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
-          <Text style={styles.info}>
-            Username must be at least 4 characters long.
+    <View style={styles.app}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Register</Text>
+        <View style={styles.form}>
+          <Text style={styles.label}>
+            Username
+            {validUser && (
+              <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
+            )}
+            {!validUser && username && (
+              <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
+            )}
           </Text>
-        </Text>
-
-        <Text style={styles.label}>
-          Password
-          {validPwd && (
-            <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
-          )}
-          {!validPwd && password && (
-            <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
-          )}
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          autoCompleteType="off"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          required
-        />
-        <Text
-          style={password && !validPwd ? styles.instructions : styles.offscreen}
-        >
-          <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
-          <Text style={styles.info}>
-            Password must be at least 10 characters long.
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            autoCompleteType="off"
+            autoCapitalize="none"
+            keyboardType="default"
+            value={username}
+            onChangeText={(text) => setUsername(text)}
+            required
+          />
+          <Text
+            style={
+              username && !validUser ? styles.instructions : styles.offscreen
+            }
+          >
+            <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
+            <Text style={styles.info}>
+              Username must be at least 4 characters long.
+            </Text>
           </Text>
-          <Text style={styles.info}>
-            Allowed special characters:{" "}
-            <Text aria-label="exclamation mark">!</Text>
-            <Text aria-label="at symbol">@</Text>
-            <Text aria-label="hashtag">#</Text>
-            <Text aria-label="dollar sign">$</Text>
-            <Text aria-label="percent">%</Text>
+
+          <Text style={styles.label}>
+            Password
+            {validPwd && (
+              <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
+            )}
+            {!validPwd && password && (
+              <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
+            )}
           </Text>
-        </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry
+            autoCompleteType="off"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            required
+          />
+          <Text
+            style={
+              password && !validPwd ? styles.instructions : styles.offscreen
+            }
+          >
+            <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
+            <Text style={styles.info}>
+              Password must be at least 10 characters long.
+            </Text>
+            <Text style={styles.info}>
+              Allowed special characters:{" "}
+              <Text aria-label="exclamation mark">!</Text>
+              <Text aria-label="at symbol">@</Text>
+              <Text aria-label="hashtag">#</Text>
+              <Text aria-label="dollar sign">$</Text>
+              <Text aria-label="percent">%</Text>
+            </Text>
+          </Text>
 
-        <Text style={styles.label}>
-          Confirm Password
-          {validSecond && second && (
-            <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
-          )}
-          {!validSecond && second && (
-            <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
-          )}
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Confirm Password"
-          secureTextEntry
-          autoCompleteType="off"
-          value={second}
-          onChangeText={(text) => setSecond(text)}
-          required
-        />
-        <Text
-          style={
-            second && !validSecond ? styles.instructions : styles.offscreen
-          }
-        >
-          <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
-          <Text style={styles.info}>Must match the first password.</Text>
-        </Text>
+          <Text style={styles.label}>
+            Confirm Password
+            {validSecond && second && (
+              <FontAwesomeIcon icon={faCheck} style={styles.validIcon} />
+            )}
+            {!validSecond && second && (
+              <FontAwesomeIcon icon={faTimes} style={styles.invalidIcon} />
+            )}
+          </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm Password"
+            secureTextEntry
+            autoCompleteType="off"
+            value={second}
+            onChangeText={(text) => setSecond(text)}
+            required
+          />
+          <Text
+            style={
+              second && !validSecond ? styles.instructions : styles.offscreen
+            }
+          >
+            <FontAwesomeIcon icon={faInfoCircle} style={styles.infoIcon} />
+            <Text style={styles.info}>Must match the first password.</Text>
+          </Text>
 
-        <Button
-          style={styles.button}
-          title="Register"
-          disabled={!validUser || !validPwd || !validSecond}
-          onPress={handleRegistration}
-        ></Button>
-      </View>
-      <View style={styles.login}>
-        <Text>Already registered?</Text>
-        <Text style={styles.link}>Login</Text>
+          <Button
+            style={styles.button}
+            title="Register"
+            disabled={!validUser || !validPwd || !validSecond}
+            onPress={handleRegistration}
+          ></Button>
+        </View>
+        <View style={styles.login}>
+          <Text>Already registered?</Text>
+          <Text style={styles.link} onPress={loginLink}>
+            Login
+          </Text>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  app: {
+    flex: 1,
+    backgroundColor: "#17222c",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   container: {
     // flex: 1,
     justifyContent: "center",
