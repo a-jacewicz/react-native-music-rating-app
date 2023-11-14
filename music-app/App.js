@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Read from "./Components/Read";
 import Register from "./Components/Register";
 import Individual from "./Components/Individual";
-// import Logout from "./Components/LogOut";
+// // import Logout from "./Components/LogOut";
 import Create from "./Components/Create";
 import Login from "./Components/Login";
 import Update from "./Components/Update";
