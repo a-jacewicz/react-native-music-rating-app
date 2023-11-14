@@ -5,4 +5,6 @@ install packages:
 npm i --save react-native-svg # ** <br> 
 npm i --save @fortawesome/fontawesome-svg-core <br>
 npm i --save @fortawesome/free-solid-svg-icons <br>
-npm i --save @fortawesome/react-native-fontawesome >br> 
+npm i --save @fortawesome/react-native-fontawesome <br> 
+npm install @react-native-async-storage/async-storage <br>
+
