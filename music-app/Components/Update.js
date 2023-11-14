@@ -11,6 +11,7 @@ import {
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import StarRating from "react-native-star-rating";
 import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Update() {
   const route = useRoute();
@@ -21,6 +22,34 @@ export default function Update() {
   const [artist, setArtist] = useState(item.artist);
   const [song, setSong] = useState(item.song);
   const [rating, setRating] = useState(item.rating);
+
+  const navigation = useNavigation();
+
+  // update the song
+  const handleUpdate = async () => {
+    const songData = { id, username, artist, song, rating };
+
+    try {
+      const response = await fetch(
+        "http://172.21.250.15:8080/index.php/rating/edit",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(songData),
+        }
+      );
+
+      // update song data list for Read
+
+      alert("Updated successfully!");
+      navigation.navigate("Read");
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <View style={styles.app}>
@@ -67,7 +96,7 @@ export default function Update() {
           <Button
             disabled={!artist || !song || !rating}
             title="Rate"
-            // onPress={handleCreate}
+            onPress={handleUpdate}
           ></Button>
         </View>
       </View>
