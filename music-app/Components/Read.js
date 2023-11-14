@@ -80,8 +80,21 @@ export default function Read() {
   };
 
   // log user out and navigate to login page
-  const handleLogout = () => {
-    navigation.navigate("Login");
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        // kelleigh IP address
+       // "http://172.21.250.15:8080/index.php/rating/view"
+        // aleks IP address
+         "http://172.21.98.195/index.php/user/logout"
+      );
+      const data = await response.json();
+      setSongData(data);
+      await AsyncStorage.removeItem('username');
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error('Error during logout!', error.message);
+    }
   };
 
   return (
