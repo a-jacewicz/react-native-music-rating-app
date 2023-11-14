@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Read() {
   const [songData, setSongData] = useState([]);
@@ -16,13 +17,27 @@ export default function Read() {
 
   // gets list of song entries
   useEffect(() => {
+    const UserCheck = async () => {
+      try {
+        const storedUsername = await AsyncStorage.getItem('username');
+        if (storedUsername) { 
+          fetchData();
+        } else {
+        navigation.navigate('Login'); 
+        }
+      }
+    catch (error) {
+      console.error('Error checking for username:', error.message);
+    }
+  };
+
     const fetchData = async () => {
       try {
         const response = await fetch(
           // kelleigh IP address
-          "http://172.21.250.15:8080/index.php/rating/view"
+         // "http://172.21.250.15:8080/index.php/rating/view"
           // aleks IP address
-          // "http://172.21.98.195/index.php/rating/view"
+           "http://172.21.98.195/index.php/rating/view"
         );
         const data = await response.json();
         setSongData(data);
@@ -30,7 +45,7 @@ export default function Read() {
         console.error(error.message);
       }
     };
-    fetchData();
+    UserCheck();
   }, []);
 
   //  go to individual song view
