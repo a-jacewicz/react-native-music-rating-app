@@ -10,12 +10,17 @@ import {
 } from "react-native";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import StarRating from "react-native-star-rating";
+import { useRoute } from "@react-navigation/native";
 
 export default function Update() {
-  const [song, setSong] = useState("");
-  const [artist, setArtist] = useState("");
-  const [rating, setRating] = useState(0);
-  const [message, setMessage] = useState("");
+  const route = useRoute();
+  const { item } = route.params;
+
+  const [id, setID] = useState(item.id);
+  const [username, setUsername] = useState(item.username);
+  const [artist, setArtist] = useState(item.artist);
+  const [song, setSong] = useState(item.song);
+  const [rating, setRating] = useState(item.rating);
 
   return (
     <View style={styles.app}>
