@@ -7,14 +7,18 @@ import {
   ScrollView,
   RefreshControl,
   SafeAreaView,
+  TextInput,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export default function Read() {
   const [songData, setSongData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // searching
 
   const navigation = useNavigation();
 
@@ -49,7 +53,15 @@ export default function Read() {
           //  "http://172.21.98.195/index.php/rating/view"
         );
         const data = await response.json();
-        setSongData(data || []);
+
+        // Filter data based on search query
+        const filteredData = data.filter(
+          (item) =>
+            item.artist.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.song.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        setSongData(filteredData || []); // changed data to filteredData
       } catch (error) {
         console.error(error.message);
       }
@@ -92,6 +104,21 @@ export default function Read() {
             <Text style={styles.username}> | username</Text>
           </Text> */}
             {/* ... */}
+            <View style={styles.search}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search by artist or song"
+                onChangeText={(text) => setSearchQuery(text)}
+                value={searchQuery}
+              />
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                color={"#6c80ff"}
+                size={30}
+                style={styles.icon}
+              />
+            </View>
+            <Text>{"\n"}</Text>
             <View>
               {songData &&
                 songData.map((item) => (
@@ -163,5 +190,22 @@ const styles = StyleSheet.create({
   },
   username: {
     color: "#bb6de8",
+  },
+  searchInput: {
+    height: 40,
+    width: 240,
+    borderColor: "gray",
+    backgroundColor: "white",
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 8,
+    color: "white",
+  },
+  search: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  icon: {
+    marginLeft: 10,
   },
 });
