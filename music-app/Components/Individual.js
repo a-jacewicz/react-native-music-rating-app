@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -26,48 +33,53 @@ export default function Individual() {
 
   // delete entry
   // pop up to confirm and navigate to read
-  // const removeEntry = async (id) => {
-  //   try {
-  //     const response = await fetch("http://localhost/index.php/rating/delete", {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ id, username }), // Make sure username is defined
-  //     });
+  const removeEntry = async (id) => {
+    try {
+      const response = await fetch(
+        "http://172.21.250.15:8080/index.php/rating/delete",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id, username }), // Make sure username is defined
+        }
+      );
 
-  //     const responseData = await response.json();
+      const responseData = await response.json();
 
-  //     if (responseData.message) {
-  //       console.log(responseData.message);
-  //       setSongData((prevSongData) =>
-  //         prevSongData.filter((item) => item.id !== id)
-  //       );
-  //     } else {
-  //       console.error("Unexpected response format:", responseData);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting entry:", error.message);
-  //   }
-  // };
+      if (responseData.message) {
+        console.log(responseData.message);
 
-  // const handleDelete = () => {
-  //   Alert.alert(
-  //     "Confirm Deletion",
-  //     "Do you want to remove?",
-  //     [
-  //       {
-  //         text: "Cancel",
-  //         style: "cancel",
-  //       },
-  //       {
-  //         text: "OK",
-  //         onPress: () => removeEntry(item.id),
-  //       },
-  //     ],
-  //     { cancelable: false }
-  //   );
-  // };
+        // update songData list and return it to Read
+
+        // Navigate back to the Read screen
+        navigation.navigate("Read");
+      } else {
+        console.error("Unexpected response format:", responseData);
+      }
+    } catch (error) {
+      console.error("Error deleting entry:", error.message);
+    }
+  };
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Confirm Deletion",
+      "Do you want to remove?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => removeEntry(item.id),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   return (
     <View style={styles.app}>
@@ -105,9 +117,9 @@ export default function Individual() {
           </TouchableOpacity>
           {/* delete button */}
           <TouchableOpacity
-          // onPress={() => {
-          //   handleDelete(item.id);
-          // }}
+            onPress={() => {
+              handleDelete(item.id);
+            }}
           >
             <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
           </TouchableOpacity>

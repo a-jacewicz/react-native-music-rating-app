@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Read() {
   const [songData, setSongData] = useState([]);
@@ -19,28 +19,27 @@ export default function Read() {
   useEffect(() => {
     const UserCheck = async () => {
       try {
-        const storedUsername = await AsyncStorage.getItem('username');
-        if (storedUsername) { 
+        const storedUsername = await AsyncStorage.getItem("username");
+        if (storedUsername) {
           fetchData();
         } else {
-        navigation.navigate('Login'); 
+          navigation.navigate("Login");
         }
+      } catch (error) {
+        console.error("Error checking for username:", error.message);
       }
-    catch (error) {
-      console.error('Error checking for username:', error.message);
-    }
-  };
+    };
 
     const fetchData = async () => {
       try {
         const response = await fetch(
           // kelleigh IP address
-         // "http://172.21.250.15:8080/index.php/rating/view"
+          "http://172.21.250.15:8080/index.php/rating/view"
           // aleks IP address
-           "http://172.21.98.195/index.php/rating/view"
+          //  "http://172.21.98.195/index.php/rating/view"
         );
         const data = await response.json();
-        setSongData(data);
+        setSongData(data || []);
       } catch (error) {
         console.error(error.message);
       }
@@ -50,10 +49,6 @@ export default function Read() {
 
   //  go to individual song view
   const onPressSong = (item) => {
-    // const data = {
-    //   item,
-    // };
-    // navigate("/viewSong", { data });
     navigation.navigate("Individual", { item });
   };
 
