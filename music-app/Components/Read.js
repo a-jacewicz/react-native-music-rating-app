@@ -71,11 +71,11 @@ export default function Read() {
           <Text>{"\n"}</Text>
           {/* list -- scrolling feature */}
           {/* visual test -- to be deleted */}
-          <Text style={styles.entry}>
+          {/* <Text style={styles.entry}>
             <Text style={styles.song}>SONG </Text>
             <Text style={styles.artist}> by Artist</Text>
             <Text style={styles.username}> | username</Text>
-          </Text>
+          </Text> */}
           {/* ... */}
           <View>
             {songData &&
@@ -146,6 +146,6 @@ const styles = StyleSheet.create({
     color: "#ccbed8",
   },
   username: {
-    color: "#161616",
+    color: "#bb6de8",
   },
 });
