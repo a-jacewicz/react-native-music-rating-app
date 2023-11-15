@@ -11,22 +11,47 @@ import {
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import StarRating from "react-native-star-rating";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function Create() {
   const [song, setSong] = useState("");
   const [artist, setArtist] = useState("");
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState("");
+  const [username, setUsername] = useState("");
 
   const navigation = useNavigation();
 
+  const getUsername = async () => {
+    try {
+      const storedUsername = await AsyncStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+    } catch (error) {
+      console.error("Error retrieving username:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    // Call the function to retrieve the username when the component mounts
+    getUsername();
+  }, []);
+
   const handleCreate = async () => {
     try {
+      // Ensure username is set before proceeding
+      if (!username) {
+        console.error("Username not found");
+        return;
+      }
+
       const response = await fetch(
         // kelleighs IP
-        "http://172.21.250.15:8080/index.php/rating/create",
+       // "http://172.21.250.15:8080/index.php/rating/create",
         // aleks IP address
-        // 'http://172.21.98.195/index.php/rating/create',
+        'http://172.21.98.195/index.php/rating/create',
         {
           method: "POST",
           headers: {
@@ -37,6 +62,7 @@ export default function Create() {
             artist: artist,
             song: song,
             rating: rating,
+            username : username, 
           }),
         }
       );
