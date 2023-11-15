@@ -25,6 +25,7 @@ CREATE TABLE `music_db`.`ratings` ( `id` INT(11) AUTO_INCREMENT NOT NULL,
                                     PRIMARY KEY (`id`),
                                     FOREIGN KEY (`username`) REFERENCES `user`(`username`))
                                     ENGINE = MyISAM;
+```
 
 Once you have your database set up, you will need to download the files found within this repo. Of these files, some are backend and some are frontend. All files you need to run to get access to our app should be found in the main branch. The frontend files can be found in the 'music-app' folder and the backend files can be found in the 'backend' folder. Within this folder there are several other folders, with these folder being called `Model`, `Controller` and `inc`. In addition, one of the backend files (index.php) is directly inside of `backend`. All of the backend files need to be moved to the inside of htdocs, which is inside of XAMPP. When moving them, copy and paste the contents from `backend` (`index.php`, `Model`, `inc`, and `Controller`) directly into your htdocs folder. Note: `backend` should not be in your htdocs folder; only its contents.
 
