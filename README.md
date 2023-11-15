@@ -18,6 +18,8 @@ To run the app using your local backend, you will need to edit the IP addresses 
 > > Create.js -- 51 <br>
 > > Update.js -- 37 <br>
 
+<b>Important Note:<b> Everytime you make changes to the ratings data--i.e., deleting, editing, creating data--you need to refresh the Read component page by swiping your finger down to produce the swirling refresh icon. 
+
 ## Files 
 
 > backend -- folder containing backend code <br>
