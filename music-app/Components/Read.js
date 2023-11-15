@@ -14,13 +14,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function Read() {
   const [songData, setSongData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); // searching
-  // const [, forceRender] = useState(undefined);
+  const [username, setUsername] = useState("");
 
   const navigation = useNavigation();
 
@@ -83,6 +83,7 @@ export default function Read() {
       try {
         const storedUsername = await AsyncStorage.getItem("username");
         if (storedUsername) {
+          setUsername(storedUsername);
           fetchData();
         } else {
           navigation.navigate("Login");
@@ -98,7 +99,7 @@ export default function Read() {
           // kelleigh IP address
           "http://172.21.250.15:8080/index.php/rating/view"
           // aleks IP address
-          //  "http://172.21.98.195/index.php/rating/view"
+          // "http://172.21.98.195/index.php/rating/view"
         );
         const data = await response.json();
 
@@ -144,6 +145,15 @@ export default function Read() {
             {/* logo */}
             <Image style={styles.logo} source={require("./logo.png")} />
             <Text>{"\n"}</Text>
+            <View style={styles.search}>
+              <Text style={styles.user}>Welcome {username} </Text>
+              <FontAwesomeIcon
+                icon={faHeart}
+                color={"#6c80ff"}
+                size={20}
+                style={styles.icon}
+              />
+            </View>
             {/* list -- scrolling feature */}
             {/* visual test -- to be deleted */}
             {/* <Text style={styles.entry}>
@@ -152,6 +162,7 @@ export default function Read() {
             <Text style={styles.username}> | username</Text>
           </Text> */}
             {/* ... */}
+            <Text>{"\n"}</Text>
             <View style={styles.search}>
               <TextInput
                 style={styles.searchInput}
@@ -258,5 +269,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+  },
+  user: {
+    fontSize: 25,
+    color: "#bb6de8",
+    fontWeight: "bold",
   },
 });

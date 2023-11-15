@@ -26,9 +26,9 @@ export default function Login() {
     try {
       const response = await fetch(
         // kelleighs IP
-        "http://172.21.250.15:8080/index.php/user/login",
+       // "http://172.21.250.15:8080/index.php/user/login",
         // aleks IP address
-        //  'http://172.21.98.195/index.php/user/login',
+          'http://172.21.98.195/index.php/user/login',
         {
           method: "POST",
           headers: {
