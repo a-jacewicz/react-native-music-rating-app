@@ -14,7 +14,6 @@ import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 export default function Update() {
   const route = useRoute();
   const { item } = route.params;
@@ -31,14 +30,13 @@ export default function Update() {
   const handleUpdate = async () => {
     const storedUsername = await AsyncStorage.getItem("username");
 
-    const songData =
-    { id, username : storedUsername, artist, song, rating };
+    const songData = { id, username: storedUsername, artist, song, rating };
 
     try {
       const response = await fetch(
-       // "http://172.21.250.15:8080/index.php/rating/edit",
+        "http://172.21.250.15:8080/index.php/rating/edit",
         // aleks IP address
-          "http://172.21.98.195/index.php/rating/edit",
+        // "http://172.21.98.195/index.php/rating/edit",
         {
           method: "POST",
           headers: {

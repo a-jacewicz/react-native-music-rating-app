@@ -32,9 +32,9 @@ export default function Read() {
     try {
       const response = await fetch(
         // kelleigh IP address
-       // "http://172.21.250.15:8080/index.php/rating/view"
+        "http://172.21.250.15:8080/index.php/rating/view"
         // aleks IP address
-          "http://172.21.98.195/index.php/rating/view"
+        // "http://172.21.98.195/index.php/rating/view"
       );
       const data = await response.json();
 
@@ -58,9 +58,9 @@ export default function Read() {
     try {
       const response = await fetch(
         // kelleigh IP address
-        //"http://172.21.250.15:8080/index.php/rating/view"
+        "http://172.21.250.15:8080/index.php/rating/view"
         // aleks IP address
-          "http://172.21.98.195/index.php/rating/view"
+        // "http://172.21.98.195/index.php/rating/view"
       );
       const data = await response.json();
 
@@ -97,9 +97,9 @@ export default function Read() {
       try {
         const response = await fetch(
           // kelleigh IP address
-          // "http://172.21.250.15:8080/index.php/rating/view"
+          "http://172.21.250.15:8080/index.php/rating/view"
           // aleks IP address
-           "http://172.21.98.195/index.php/rating/view"
+          // "http://172.21.98.195/index.php/rating/view"
         );
         const data = await response.json();
 
@@ -131,13 +131,13 @@ export default function Read() {
   // log user out and navigate to login page
   const handleLogout = async () => {
     try {
-    await AsyncStorage.removeItem("username");
-    setUsername("");
-    navigation.navigate("Login");
-  } catch (error) {
-    console.error("Error logging out:", error.message);
-  }
-};
+      await AsyncStorage.removeItem("username");
+      setUsername("");
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -160,18 +160,10 @@ export default function Read() {
                 style={styles.icon}
               />
             </View>
-            {/* list -- scrolling feature */}
-            {/* visual test -- to be deleted */}
-            {/* <Text style={styles.entry}>
-            <Text style={styles.song}>SONG </Text>
-            <Text style={styles.artist}> by Artist</Text>
-            <Text style={styles.username}> | username</Text>
-          </Text> */}
-            {/* ... */}
             <Text>{"\n"}</Text>
             <View style={styles.search}>
               <TextInput
-              key={username}
+                key={username}
                 style={styles.searchInput}
                 placeholder="Search by artist or song"
                 onChangeText={(text) => setSearchQuery(text)}
