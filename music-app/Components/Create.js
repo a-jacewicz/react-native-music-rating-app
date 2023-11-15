@@ -21,9 +21,9 @@ export default function Create() {
     try {
       const response = await fetch(
         // kelleighs IP
-        // "http://172.21.250.15:8080/index.php/rating/create",
+        "http://172.21.250.15:8080/index.php/rating/create",
         // aleks IP address
-          'http://172.21.98.195/index.php/rating/create',
+        // 'http://172.21.98.195/index.php/rating/create',
         {
           method: "POST",
           headers: {
