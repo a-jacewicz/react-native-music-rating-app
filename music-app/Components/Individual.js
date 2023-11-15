@@ -1,3 +1,4 @@
+import React, { useEffect, useState, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -5,16 +6,13 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  RefreshControl,
   SafeAreaView,
-  ScrollView,
 } from "react-native";
-import React, { useEffect, useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import StarRating from "react-native-star-rating";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Individual() {
   const route = useRoute();
@@ -25,83 +23,70 @@ export default function Individual() {
   const [artist, setArtist] = useState(item.artist);
   const [song, setSong] = useState(item.song);
   const [rating, setRating] = useState(item.rating);
+  const [showIcons, setShowIcons] = useState(false);
 
-  const [refreshing, setRefreshing] = useState(false);
+  const navigation = useNavigation();
 
-  const onRefresh = async () => {
+  const onRefresh = useCallback(async () => {
     try {
-      const response = await fetch(
+      const response = 
+      await fetch(
         // kelleigh IP address
-        "http://172.21.250.15:8080/index.php/rating/view"
+       // "http://172.21.250.15:8080/index.php/rating/view"
         // aleks IP address
-        //  "http://172.21.98.195/index.php/rating/view"
+          "http://172.21.98.195/index.php/rating/view"
       );
       const data = await response.json();
 
-      // Filter data based on search query
-      // const filteredData = data.filter(
-      //   (item) =>
-      //     item.artist.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      //     item.song.toLowerCase().includes(searchQuery.toLowerCase())
-      // );
       const filteredData = data.filter((item) => item.id === id);
 
       if (filteredData.length > 0) {
-        // Update state values with the filtered entry
         setUsername(filteredData[0].username);
         setArtist(filteredData[0].artist);
         setSong(filteredData[0].song);
         setRating(filteredData[0].rating);
       } else {
-        // Handle the case where the entry is not found
         console.warn("Entry not found in the data");
       }
-
-      // setSongData(filteredData || []); // changed data to filteredData
     } catch (error) {
       console.error(error.message);
     }
+  }, [id]);
+
+  const isCurrentUser = async () => {
+    const loggedInUsername = await AsyncStorage.getItem("username");
+    return loggedInUsername === username;
   };
 
-  // useEffect to run onRefresh when the component is mounted
-  // useEffect(() => {
-  //   onRefresh();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      await onRefresh();
+      const currentUser = await isCurrentUser();
+      setShowIcons(currentUser);
+    };
+    fetchData();
+  }, [onRefresh]);
 
-  const navigation = useNavigation();
-
-  // edit entry
-  // navigate to update page with data
-  const handleEdit = (item) => {
-    navigation.navigate("Update", { item });
-  };
-
-  // delete entry
-  // pop up to confirm and navigate to read
-  const removeEntry = async (id) => {
+  const removeEntry = async () => {
     try {
-      const response = await fetch(
-        "http://172.21.250.15:8080/index.php/rating/delete",
+      const response =  await fetch(
+        // kelleigh IP address
+       // "http://172.21.250.15:8080/index.php/rating/view"
         // aleks IP address
-        // 'http://172.21.98.195/index.php/rating/delete',
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id, username }), // Make sure username is defined
-        }
-      );
+          "http://172.21.98.195/index.php/rating/delete", 
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id, username }),
+          }
+        );
 
       const responseData = await response.json();
 
       if (responseData.message) {
         console.log(responseData.message);
-
-        // update songData list and return it to Read
-
-        // Navigate back to the Read screen
-        // navigation.navigate("Read");
         navigation.goBack();
       } else {
         console.error("Unexpected response format:", responseData);
@@ -122,26 +107,43 @@ export default function Individual() {
         },
         {
           text: "OK",
-          onPress: () => removeEntry(item.id),
+          onPress: removeEntry,
         },
       ],
       { cancelable: false }
     );
   };
 
+  const handleEdit = () => {
+    navigation.navigate("Update", { item });
+  };
+
+  const renderEditDeleteIcons = () => {
+    if (showIcons) {
+      return (
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={handleEdit}>
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+              color={"#B131FA"}
+              size={30}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleDelete}>
+            <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    return null;
+  };
+
   return (
-    // <SafeAreaView>
-    //   <ScrollView
-    //     refreshControl={
-    //       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    //     }
-    //   >
-    <View style={styles.app}>
+    <SafeAreaView style={styles.app}>
       <View style={styles.container}>
-        {/* logo */}
         <Image style={styles.logo} source={require("./logo.png")} />
         <Text>{"\n"}</Text>
-        {/* song entry details */}
         <Text style={styles.username}>{username}</Text>
         <Text style={styles.song}>{song}</Text>
         <Text style={styles.artist}>by {artist}</Text>
@@ -154,34 +156,9 @@ export default function Individual() {
           starSize={36}
         />
         <Text>{"\n"}</Text>
-        {/* add condition to only show if username is same as user who is logged in */}
-        <View style={styles.iconContainer}>
-          {/* edit button */}
-          <TouchableOpacity
-            onPress={() => {
-              handleEdit(item);
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faPenToSquare}
-              color={"#B131FA"}
-              size={30}
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-          {/* delete button */}
-          <TouchableOpacity
-            onPress={() => {
-              handleDelete(item.id);
-            }}
-          >
-            <FontAwesomeIcon icon={faTrash} color={"#FF1CC0"} size={30} />
-          </TouchableOpacity>
-        </View>
+        {renderEditDeleteIcons()}
       </View>
-    </View>
-    //   </ScrollView>
-    // </SafeAreaView>
+    </SafeAreaView>
   );
 }
 
