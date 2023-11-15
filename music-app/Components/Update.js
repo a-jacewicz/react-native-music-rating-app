@@ -31,9 +31,9 @@ export default function Update() {
 
     try {
       const response = await fetch(
-        "http://172.21.250.15:8080/index.php/rating/edit",
+       // "http://172.21.250.15:8080/index.php/rating/edit",
         // aleks IP address
-        //  "http://172.21.98.195/index.php/rating/edit",
+          "http://172.21.98.195/index.php/rating/edit",
         {
           method: "POST",
           headers: {
@@ -46,7 +46,7 @@ export default function Update() {
 
       // update song data list for Read
 
-      alert("Updated successfully!");
+      alert("Edited successfully!");
       // navigation.goBack();
       navigation.navigate("Read");
     } catch (error) {
@@ -63,7 +63,7 @@ export default function Update() {
         {/* logo
         <Image style={styles.logo} source={require("./logo.png")} />
         <Text>{"\n"}</Text> */}
-        <Text style={styles.title}>Update Rating</Text>
+        <Text style={styles.title}>Edit Rating</Text>
         <View style={styles.form}>
           <Text style={styles.label}>Artist</Text>
           <TextInput
