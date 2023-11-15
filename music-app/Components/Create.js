@@ -13,7 +13,6 @@ import StarRating from "react-native-star-rating";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 export default function Create() {
   const [song, setSong] = useState("");
   const [artist, setArtist] = useState("");
@@ -49,9 +48,9 @@ export default function Create() {
 
       const response = await fetch(
         // kelleighs IP
-       // "http://172.21.250.15:8080/index.php/rating/create",
+        "http://172.21.250.15:8080/index.php/rating/create",
         // aleks IP address
-        'http://172.21.98.195/index.php/rating/create',
+        // "http://172.21.98.195/index.php/rating/create",
         {
           method: "POST",
           headers: {
@@ -62,7 +61,7 @@ export default function Create() {
             artist: artist,
             song: song,
             rating: rating,
-            username : username, 
+            username: username,
           }),
         }
       );
@@ -79,8 +78,14 @@ export default function Create() {
       }
 
       if (response.status === 200) {
-        alert("Rated successfully!");
-        navigation.goBack();
+        if (data.error === "DuplicateEntry") {
+          alert("You have already rated this song!");
+        } else {
+          alert("Rated successfully!");
+          navigation.goBack();
+        }
+        // alert("Rated successfully!");
+        // navigation.goBack();
       } else {
         setMessage("Rating failed.");
         throw new Error("Rating failed.");
