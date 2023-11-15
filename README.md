@@ -3,10 +3,30 @@
 ## About the App 
 
 The code written by Kelleigh Entrekin and Aleks Jacewicz for our music app assigment for COMP333 at Wesleyan University.
-This code makes up a mobile phone app consisting of registration and login pages for users to register and log into the app, as well as pages only accessible once the user is logged in. These include a "read" page where the user can read all the artist names and soong titles of previously written ratings and access a search bar, an "individual" page where all the data for a specific ratings can be seen and where delete and edit icons allow for deletion of the ratings/link to an appropriate page if the user logged in made the given post, a page where a new rating can be submitted, and a page where the existing post can be edited. 
-## How to Run the App 
+This code makes up a mobile phone app consisting of registration and login pages for users to register and log into the app, as well as pages only accessible once the user is logged in. These include a "read" page where the user can read all the artist names and song titles of previously written ratings and access a search bar, an "individual" page where all the data for a specific ratings can be seen and where delete and edit icons allow for deletion of the ratings/link to an appropriate page if the user logged in made the given post, a page where a new rating can be submitted, and a page where the existing post can be edited. 
+## How to Run the App  
+Firstly, to set up the backend, you are going to need to download XAMPP and use MYSQL Database. Once you have this set up, go to http://localhost/phpmyadmin and make a database called `music_db`. Within that database make two datatables, one called `ratings` and the other `users`. To do so, click the SQL tab within `music_db` and input the following SQL queries.
 
-TBD 
+```sql
+-- creates users table
+CREATE TABLE `music_db`.`users` ( `username` VARCHAR(250) NOT NULL ,
+                                  `password` VARCHAR(255) NOT NULL ,
+                                  PRIMARY KEY (`username`),
+                                  UNIQUE (`username`))
+                                  ENGINE = MyISAM;
+
+
+-- creates ratings table
+CREATE TABLE `music_db`.`ratings` ( `id` INT(11) AUTO_INCREMENT NOT NULL,
+                                    `username` VARCHAR(250) NOT NULL ,
+                                    `artist` VARCHAR(255) NOT NULL ,
+                                    `song` VARCHAR(255) NOT NULL ,
+                                    `rating` INT(1) NOT NULL ,
+                                    PRIMARY KEY (`id`),
+                                    FOREIGN KEY (`username`) REFERENCES `user`(`username`))
+                                    ENGINE = MyISAM;
+
+Once you have your database set up, you will need to download the files found within this repo. Of these files, some are backend and some are frontend. All files you need to run to get access to our app should be found in the main branch. The frontend files can be found in the 'music-app' folder and the backend files can be found in the 'backend' folder. Within this folder there are several other folders, with these folder being called `Model`, `Controller` and `inc`. In addition, one of the backend files (index.php) is directly inside of `backend`. All of the backend files need to be moved to the inside of htdocs, which is inside of XAMPP. When moving them, copy and paste the contents from `backend` (`index.php`, `Model`, `inc`, and `Controller`) directly into your htdocs folder. Note: `backend` should not be in your htdocs folder; only its contents.
 
 To run the app using your local backend, you will need to edit the IP addresses in the url's in the following lines of code: 
 
@@ -18,7 +38,14 @@ To run the app using your local backend, you will need to edit the IP addresses 
 > > Create.js -- 51 <br>
 > > Update.js -- 37 <br>
 
-<b>Important Note:<b> Everytime you make changes to the ratings data--i.e., deleting, editing, creating data--you need to refresh the Read component page by swiping your finger down to produce the swirling refresh icon. 
+You will need to add your own IP address and follow the format of the link that is currently there in order for the app to work. For example, inside of handleCreate, you will need to change the code to be "http://YOURIP/index.php/rating/create".
+
+Once you have your files downloaded properly placed and the correct code uncommented, the next thing you will need to do is download various packages to allow the features we added to our app to work. You will perform the code found below in the Packages section of this README in your command line.
+
+
+At this point, you should be able to run our app! Start Apache and MySQL in XAMPP and start your android emulator using Android Studio, then cd into the frontend 'music-app' code so that you are in music-app. Then type in the command 'npx expo start' and choose 'a' to link to your android emulator. You should get the app running in the simulator, begining from a login page.
+
+<b>Important Note:<b> When using the app, everytime you make changes to the ratings data--i.e., deleting, editing, creating data--you need to refresh the Read component page by swiping your finger down to produce the swirling refresh icon. 
 
 ## Files 
 
