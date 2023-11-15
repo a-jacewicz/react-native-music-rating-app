@@ -13,16 +13,8 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    // <View style={styles.container}>
-    //   <Read />
-    //   <Register />
-    //   <Logout />
-    //   <Create />
-    //   <Login />
-    // </View>
-
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Read">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Read" component={Read} />
@@ -34,10 +26,10 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#17222c",
-    alignItems: "center",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#17222c",
+//     alignItems: "center",
+//   },
+// });
