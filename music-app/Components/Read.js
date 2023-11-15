@@ -21,6 +21,7 @@ export default function Read() {
   const [searchQuery, setSearchQuery] = useState(""); // searching
   const [username, setUsername] = useState("");
 
+
   const navigation = useNavigation();
 
   const onRefresh = useCallback(() => {
@@ -36,7 +37,7 @@ export default function Read() {
       try {
         const storedUsername = await AsyncStorage.getItem("username");
         if (storedUsername) {
-          setUsername(storedUsername);
+          setUsername(storedUsername); 
           fetchData();
         } else {
           navigation.navigate("Login");
@@ -50,16 +51,11 @@ export default function Read() {
       try {
         const response = await fetch(
           // kelleigh IP address
-
          // "http://172.21.250.15:8080/index.php/rating/view"
-
-         //  "http://172.21.250.15:8080/index.php/rating/view"
-
           // aleks IP address
-           "http://172.21.98.195/index.php/rating/view"
+            "http://172.21.98.195/index.php/rating/view"
         );
         const data = await response.json();
-
 
         // Filter data based on search query
         const filteredData = data.filter(
@@ -102,7 +98,7 @@ export default function Read() {
           <View style={styles.container}>
             {/* logo */}
             <Image style={styles.logo} source={require("./logo.png")} />
-            <Text style={styles.username}>Welcome, {username}</Text> 
+            <Text style={styles.username}>Welcome, {username}</Text>
             <Text>{"\n"}</Text>
             {/* list -- scrolling feature */}
             {/* visual test -- to be deleted */}
