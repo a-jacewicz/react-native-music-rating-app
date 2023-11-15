@@ -5,8 +5,11 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useRoute } from "@react-navigation/native";
@@ -22,6 +25,48 @@ export default function Individual() {
   const [artist, setArtist] = useState(item.artist);
   const [song, setSong] = useState(item.song);
   const [rating, setRating] = useState(item.rating);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    try {
+      const response = await fetch(
+        // kelleigh IP address
+        "http://172.21.250.15:8080/index.php/rating/view"
+        // aleks IP address
+        //  "http://172.21.98.195/index.php/rating/view"
+      );
+      const data = await response.json();
+
+      // Filter data based on search query
+      // const filteredData = data.filter(
+      //   (item) =>
+      //     item.artist.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      //     item.song.toLowerCase().includes(searchQuery.toLowerCase())
+      // );
+      const filteredData = data.filter((item) => item.id === id);
+
+      if (filteredData.length > 0) {
+        // Update state values with the filtered entry
+        setUsername(filteredData[0].username);
+        setArtist(filteredData[0].artist);
+        setSong(filteredData[0].song);
+        setRating(filteredData[0].rating);
+      } else {
+        // Handle the case where the entry is not found
+        console.warn("Entry not found in the data");
+      }
+
+      // setSongData(filteredData || []); // changed data to filteredData
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  // useEffect to run onRefresh when the component is mounted
+  // useEffect(() => {
+  //   onRefresh();
+  // }, []);
 
   const navigation = useNavigation();
 
@@ -83,6 +128,12 @@ export default function Individual() {
   };
 
   return (
+    // <SafeAreaView>
+    //   <ScrollView
+    //     refreshControl={
+    //       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    //     }
+    //   >
     <View style={styles.app}>
       <View style={styles.container}>
         {/* logo */}
@@ -127,6 +178,8 @@ export default function Individual() {
         </View>
       </View>
     </View>
+    //   </ScrollView>
+    // </SafeAreaView>
   );
 }
 

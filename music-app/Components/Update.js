@@ -45,8 +45,8 @@ export default function Update() {
       // update song data list for Read
 
       alert("Updated successfully!");
-      navigation.goBack();
-      // navigation.navigate("Read");
+      // navigation.goBack();
+      navigation.navigate("Read");
     } catch (error) {
       console.error(error.message);
     }
