@@ -36,7 +36,9 @@ export default function Individual() {
   const removeEntry = async (id) => {
     try {
       const response = await fetch(
-        "http://172.21.250.15:8080/index.php/rating/delete",
+        // "http://172.21.250.15:8080/index.php/rating/delete",
+        // aleks IP address
+        'http://172.21.98.195/index.php/rating/delete',
         {
           method: "DELETE",
           headers: {

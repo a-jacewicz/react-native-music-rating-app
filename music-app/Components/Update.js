@@ -31,7 +31,9 @@ export default function Update() {
 
     try {
       const response = await fetch(
-        "http://172.21.250.15:8080/index.php/rating/edit",
+        // "http://172.21.250.15:8080/index.php/rating/edit",
+         // aleks IP address
+         "http://172.21.98.195/index.php/rating/edit",
         {
           method: "POST",
           headers: {
