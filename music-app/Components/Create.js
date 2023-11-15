@@ -10,12 +10,15 @@ import {
 } from "react-native";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import StarRating from "react-native-star-rating";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Create() {
   const [song, setSong] = useState("");
   const [artist, setArtist] = useState("");
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState("");
+
+  const navigation = useNavigation();
 
   const handleCreate = async () => {
     try {
@@ -51,6 +54,7 @@ export default function Create() {
 
       if (response.status === 200) {
         alert("Rated successfully!");
+        navigation.goBack();
       } else {
         setMessage("Rating failed.");
         throw new Error("Rating failed.");
