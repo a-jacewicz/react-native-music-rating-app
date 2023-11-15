@@ -12,6 +12,8 @@ import {
 import StarRating from "react-native-star-rating";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function Update() {
   const route = useRoute();
@@ -27,7 +29,10 @@ export default function Update() {
 
   // update the song
   const handleUpdate = async () => {
-    const songData = { id, username, artist, song, rating };
+    const storedUsername = await AsyncStorage.getItem("username");
+
+    const songData =
+    { id, username : storedUsername, artist, song, rating };
 
     try {
       const response = await fetch(
