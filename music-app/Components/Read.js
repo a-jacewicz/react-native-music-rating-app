@@ -8,6 +8,7 @@ import {
   RefreshControl,
   SafeAreaView,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -19,15 +20,62 @@ export default function Read() {
   const [songData, setSongData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); // searching
+  // const [, forceRender] = useState(undefined);
 
   const navigation = useNavigation();
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+  // const onRefresh = useCallback(() => {
+  //   fetchData();
+  // }, []);
+
+  const onRefresh = async () => {
+    try {
+      const response = await fetch(
+        // kelleigh IP address
+        "http://172.21.250.15:8080/index.php/rating/view"
+        // aleks IP address
+        //  "http://172.21.98.195/index.php/rating/view"
+      );
+      const data = await response.json();
+
+      // Filter data based on search query
+      const filteredData = data.filter(
+        (item) =>
+          item.artist.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.song.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+      setSongData(filteredData || []); // changed data to filteredData
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  // const handleSearch = () => {
+  //   forceRender((prev) => !prev);
+  // };
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(
+        // kelleigh IP address
+        "http://172.21.250.15:8080/index.php/rating/view"
+        // aleks IP address
+        //  "http://172.21.98.195/index.php/rating/view"
+      );
+      const data = await response.json();
+
+      // Filter data based on search query
+      const filteredData = data.filter(
+        (item) =>
+          item.artist.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.song.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+      setSongData(filteredData || []); // changed data to filteredData
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   // gets list of song entries
   useEffect(() => {
@@ -111,12 +159,15 @@ export default function Read() {
                 onChangeText={(text) => setSearchQuery(text)}
                 value={searchQuery}
               />
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                color={"#6c80ff"}
-                size={30}
-                style={styles.icon}
-              />
+              {/* have icon refresh page */}
+              <TouchableOpacity onPress={() => handleSearch()}>
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  color={"#6c80ff"}
+                  size={30}
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
             </View>
             <Text>{"\n"}</Text>
             <View>
@@ -199,7 +250,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.4,
     marginBottom: 10,
     padding: 8,
-    color: "white",
+    color: "black",
   },
   search: {
     flexDirection: "row",
