@@ -29,12 +29,11 @@ export default function Individual() {
 
   const onRefresh = useCallback(async () => {
     try {
-      const response = 
-      await fetch(
+      const response = await fetch(
         // kelleigh IP address
-       // "http://172.21.250.15:8080/index.php/rating/view"
+        "http://172.21.250.15:8080/index.php/rating/view"
         // aleks IP address
-          "http://172.21.98.195/index.php/rating/view"
+        // "http://172.21.98.195/index.php/rating/view"
       );
       const data = await response.json();
 
@@ -69,19 +68,19 @@ export default function Individual() {
 
   const removeEntry = async () => {
     try {
-      const response =  await fetch(
+      const response = await fetch(
         // kelleigh IP address
-       // "http://172.21.250.15:8080/index.php/rating/view"
+        "http://172.21.250.15:8080/index.php/rating/delete",
         // aleks IP address
-          "http://172.21.98.195/index.php/rating/delete", 
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id, username }),
-          }
-        );
+        // "http://172.21.98.195/index.php/rating/delete",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id, username }),
+        }
+      );
 
       const responseData = await response.json();
 
