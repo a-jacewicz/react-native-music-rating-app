@@ -49,11 +49,21 @@ To run the app using your local backend, you will need to edit the IP addresses 
 > > > Create.js -- create component file for users to create a rating <br>
 > > > Update.js -- update component file for users to edit their ratings <br>
 
-install packages: 
+## Packages 
 
-npm i --save react-native-svg # ** <br> 
-npm i --save @fortawesome/fontawesome-svg-core <br>
-npm i --save @fortawesome/free-solid-svg-icons <br>
-npm i --save @fortawesome/react-native-fontawesome <br> 
-npm install @react-native-async-storage/async-storage <br>
+Install the following packages: 
 
+```npm
+npm i --save react-native-svg # ** 
+npm i --save @fortawesome/fontawesome-svg-core 
+npm i --save @fortawesome/free-solid-svg-icons 
+npm i --save @fortawesome/react-native-fontawesome  
+npm install @react-native-async-storage/async-storage 
+``` 
+
+<br>
+<br>
+<br>
+
+Work was distributed 50/50. <br>
+Have a wonderful day and enjoy! ♥
