@@ -2,8 +2,8 @@
 
 ## About the App 
 
-The code written by Kelleigh Entrekin and Aleks Jacewicz for our music app assigment for COMP333 at Wesleyan University.
-This code makes up a mobile phone app consisting of registration and login pages for users to register and log into the app, as well as pages only accessible once the user is logged in. These include a "read" page where the user can read all the artist names and song titles of previously written ratings and access a search bar, an "individual" page where all the data for a specific ratings can be seen and where delete and edit icons allow for deletion of the ratings/link to an appropriate page if the user logged in made the given post, a page where a new rating can be submitted, and a page where the existing post can be edited. 
+This is code written by Kelleigh Entrekin and Aleks Jacewicz. 
+It makes up a mobile phone app consisting of registration and login pages for users to register and log into a music rating app called M, as well as pages only accessible once the user is logged in. These include a "read" page where the user can read all the artist names and song titles of previously written ratings and access a search bar, an "individual" page where all the data for a specific ratings can be seen and where delete and edit icons allow for deletion of the ratings/link to an appropriate page if the user logged in made the given post, a page where a new rating can be submitted, and a page where the existing post can be edited. 
 ## How to Run the App  
 Firstly, to set up the backend, you are going to need to download XAMPP and use MYSQL Database. Once you have this set up, go to http://localhost/phpmyadmin and make a database called `music_db`. Within that database make two datatables, one called `ratings` and the other `users`. To do so, click the SQL tab within `music_db` and input the following SQL queries.
 
